@@ -8,13 +8,16 @@ const delay = ms => {
       }, ms);
     });
   };
-  const logge = time => console.log(`Resolved after ${time}ms`);
-//Перевірка
-  delay(2000).then(logger); // Resolved after 2000ms
-  delay(1000).then(logger); // Resolved after 1000ms
-  delay(1500).then(logger); // Resolved after 1500ms
- //Завдання 2: Функція toggleUserState() Ця функція має приймати allUsers,
- //  userName і повертати проміс, який переходить в стан "resolved" з оновленим списком користувачів updatedUsers.
+  const logTime = time => console.log(`Resolved after ${time}ms`);
+  // Перевірка
+  delay(2000).then(logTime);
+  delay(1000).then(logTime);
+  delay(1500).then(logTime);
+  //Завдання 2: Перепиши функцію toggleUserState() так, 
+  // щоб вона не використовувала callback-функцію 
+  // callback, а приймала всього два параметри allUsers
+  //  і userName і повертала проміс.
+
   const toggleUserState = (allUsers, userName) => {
     return new Promise(resolve => {
       const updatedUsers = allUsers.map(user =>
@@ -23,9 +26,14 @@ const delay = ms => {
       resolve(updatedUsers);
     });
   };
-  const logger = updatedUsers => console.table(updatedUsers);
-  toggleUserState(users, 'Mango').then(logger);
-  toggleUserState(users, 'Lux').then(logger);
+  const logUsers = updatedUsers => console.table(updatedUsers);
+  // Перевірка
+  const users = [
+    { name: "Mango", active: true },
+    { name: "Lux", active: false }
+  ];
+  toggleUserState(users, 'Mango').then(logUsers);
+  toggleUserState(users, 'Lux').then(logUsers);
   //Завдання 3: Функція makeTransaction() Ця функція також має повертати 
   // проміс, який переходить в стан "resolved" при успішному виконанні транзакції (logSuccess викликається), або в стан "rejected" при помилці (logError викликається).
   const randomIntegerFromInterval = (min, max) => {
